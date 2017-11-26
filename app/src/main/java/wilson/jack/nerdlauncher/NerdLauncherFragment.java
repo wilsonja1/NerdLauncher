@@ -2,6 +2,7 @@ package wilson.jack.nerdlauncher;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -53,16 +54,17 @@ public class NerdLauncherFragment extends Fragment{
         });
 
         Log.i(TAG, "Found " + activities.size() + " activities.");
-
+        mRecyclerView.setAdapter(new ActivityAdapter(activities));
     }
 
-    private class ActivityHolder extends RecyclerView.ViewHolder {
+    private class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ResolveInfo mResolveInfo;
         private TextView mNameTextView;
 
         public ActivityHolder(View itemView){
             super(itemView);
             mNameTextView = (TextView) itemView;
+            mNameTextView.setOnClickListener(this);
         }
 
         public void bindActivity(ResolveInfo resolveInfo){
@@ -70,6 +72,14 @@ public class NerdLauncherFragment extends Fragment{
             PackageManager pm = getActivity().getPackageManager();
             String appName = mResolveInfo.loadLabel(pm).toString();
             mNameTextView.setText(appName);
+        }
+
+        @Override
+        public void onClick(View v){
+            ActivityInfo activityInfo = mResolveInfo.activityInfo;
+
+            Intent i = new Intent(Intent.ACTION_MAIN).setClassName(activityInfo.applicationInfo.packageName, activityInfo.name);
+            startActivity(i);
         }
     }
 
@@ -83,7 +93,7 @@ public class NerdLauncherFragment extends Fragment{
         @Override
         public ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType){
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(android.R.simple_list_item_1, parent, false);
+            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
             return new ActivityHolder(view);
         }
 
