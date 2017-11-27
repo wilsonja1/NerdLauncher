@@ -67,9 +67,11 @@ public class NerdLauncherFragment extends Fragment{
         public ActivityHolder(View v){
             super(v);
 
+            //Set onclick listener for the textview
             mNameTextView = (TextView) v.findViewById(android.R.id.text1);
             mNameTextView.setOnClickListener(this);
 
+            //Find id for the ImageView
             mIconImageView = (ImageView) v.findViewById(android.R.id.icon);
         }
 
@@ -79,6 +81,7 @@ public class NerdLauncherFragment extends Fragment{
             String appName = mResolveInfo.loadLabel(pm).toString();
             mNameTextView.setText(appName);
 
+            //Load and set the icon
             Drawable appIcon = mResolveInfo.loadIcon(pm);
             mIconImageView.setImageDrawable(appIcon);
         }
@@ -103,7 +106,7 @@ public class NerdLauncherFragment extends Fragment{
         @Override
         public ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType){
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(android.R.layout.activity_list_item, parent, false);
+            View view = layoutInflater.inflate(android.R.layout.activity_list_item, parent, false);//activity_list_item includes an icon and textview
             return new ActivityHolder(view);
         }
 
