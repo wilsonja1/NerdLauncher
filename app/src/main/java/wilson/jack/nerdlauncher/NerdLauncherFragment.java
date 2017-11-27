@@ -66,9 +66,11 @@ public class NerdLauncherFragment extends Fragment{
 
         public ActivityHolder(View v){
             super(v);
-            mNameTextView = (TextView) v;
+
+            mNameTextView = (TextView) v.findViewById(android.R.id.text1);
             mNameTextView.setOnClickListener(this);
-            //mIconImageView = (ImageView) v;//Grab image view to place cion
+
+            mIconImageView = (ImageView) v.findViewById(android.R.id.icon);
         }
 
         public void bindActivity(ResolveInfo resolveInfo){
@@ -77,8 +79,8 @@ public class NerdLauncherFragment extends Fragment{
             String appName = mResolveInfo.loadLabel(pm).toString();
             mNameTextView.setText(appName);
 
-            //Drawable appIcon = mResolveInfo.loadIcon(pm);
-            //mIconImageView.setImageDrawable(appIcon);
+            Drawable appIcon = mResolveInfo.loadIcon(pm);
+            mIconImageView.setImageDrawable(appIcon);
         }
 
         @Override
@@ -101,8 +103,7 @@ public class NerdLauncherFragment extends Fragment{
         @Override
         public ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType){
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            //activity_list_item
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            View view = layoutInflater.inflate(android.R.layout.activity_list_item, parent, false);
             return new ActivityHolder(view);
         }
 
