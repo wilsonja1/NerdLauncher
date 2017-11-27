@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class NerdLauncherFragment extends Fragment{
+public class NerdLauncherFragment extends Fragment {
     private static final String TAG = "NerdLauncherFragment";
     private RecyclerView mRecyclerView;
 
@@ -31,7 +31,7 @@ public class NerdLauncherFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIsntanceState) {
-        View v= inflater.inflate(R.layout.fragment_nerd_launcher, container, false);
+        View v = inflater.inflate(R.layout.fragment_nerd_launcher, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.app_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -39,7 +39,7 @@ public class NerdLauncherFragment extends Fragment{
         return v;
     }
 
-    private void setupAdapter(){
+    private void setupAdapter() {
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -59,12 +59,12 @@ public class NerdLauncherFragment extends Fragment{
         mRecyclerView.setAdapter(new ActivityAdapter(activities));
     }
 
-    private class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ResolveInfo mResolveInfo;
         private TextView mNameTextView;
         private ImageView mIconImageView;
 
-        public ActivityHolder(View v){
+        public ActivityHolder(View v) {
             super(v);
 
             //Set onclick listener for the textview
@@ -75,7 +75,7 @@ public class NerdLauncherFragment extends Fragment{
             mIconImageView = (ImageView) v.findViewById(android.R.id.icon);
         }
 
-        public void bindActivity(ResolveInfo resolveInfo){
+        public void bindActivity(ResolveInfo resolveInfo) {
             mResolveInfo = resolveInfo;
             PackageManager pm = getActivity().getPackageManager();
             String appName = mResolveInfo.loadLabel(pm).toString();
@@ -87,7 +87,7 @@ public class NerdLauncherFragment extends Fragment{
         }
 
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             ActivityInfo activityInfo = mResolveInfo.activityInfo;
 
             Intent i = new Intent(Intent.ACTION_MAIN).setClassName(activityInfo.applicationInfo.packageName, activityInfo.name)
@@ -104,14 +104,14 @@ public class NerdLauncherFragment extends Fragment{
         }
 
         @Override
-        public ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        public ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View view = layoutInflater.inflate(android.R.layout.activity_list_item, parent, false);//activity_list_item includes an icon and textview
             return new ActivityHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ActivityHolder holder, int position){
+        public void onBindViewHolder(ActivityHolder holder, int position) {
             ResolveInfo resolveInfo = mActivities.get(position);
             holder.bindActivity(resolveInfo);
         }
